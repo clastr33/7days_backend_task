@@ -20,10 +20,9 @@ class FormController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
+            $this->addFlash('formData', $formData);
 
-            return $this->redirectToRoute('app_success', [
-
-            ]);
+            return $this->redirectToRoute('app_success');
         }
 
         return $this->render('form/index.html.twig', [
@@ -36,6 +35,30 @@ class FormController extends AbstractController
      */
     public function success(): Response
     {
-        return $this->render('form/success.html.twig');
+        $formData = $this->get('session')->getFlashBag()->get('formData')[0];
+
+        $inputDate = $formData['date'];
+        $inputTimezone = $formData['timezone'];
+
+        $date = new \DateTime($inputDate);
+
+        // Offset In Minutes
+        $timezone = new \DateTimeZone($inputTimezone);
+        $offsetSeconds = $timezone->getOffset(new \DateTime());
+        $offsetMinutes = $offsetSeconds / 60;
+        $offsetMinutes = $offsetMinutes > 0 ? '+' . $offsetMinutes : $offsetMinutes;
+
+        // February Length
+        $currentYear = (int) date($inputDate);
+        $february = new \DateTime("$currentYear-02-01");
+        $februaryLength = (int) $february->format('t');
+
+        return $this->render('form/success.html.twig', [
+            'inputTimezone' => $inputTimezone,
+            'offsetMinutes' => $offsetMinutes,
+            'februaryLength' => $februaryLength,
+            'monthName' => $date->format('F'),
+            'monthLength' => (int)$date->format('t'),
+        ]);
     }
 }

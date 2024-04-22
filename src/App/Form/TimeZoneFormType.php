@@ -5,7 +5,6 @@ namespace App\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
@@ -29,17 +28,10 @@ class TimeZoneFormType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                     new Regex([
-                        'pattern' => '/^[a-zA-Z]+\/[a-zA-Z]+$/', // ^[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+$
+                        'pattern' => '/^[a-zA-Z_-]+\/[a-zA-Z_-]+$/',
                         'message' => 'Please enter a valid date in the format Continent/City.',
                     ]),
                 ],
             ]);
-    }
-
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            // Configure your form options here
-        ]);
     }
 }
