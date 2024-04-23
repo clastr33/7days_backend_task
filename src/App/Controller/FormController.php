@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\TimeZoneFormType;
 use App\Service\TimeCountService;
 use DateTime;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,9 +31,11 @@ class FormController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
-            $this->addFlash('formData', $formData);
 
-            return $this->redirectToRoute('app_success');
+            return $this->redirectToRoute('app_success', [
+                'inputDate' => $formData['date'],
+                'inputTimezone' => $formData['timezone'],
+            ]);
         }
 
         return $this->render('form/index.html.twig', [
@@ -41,21 +44,19 @@ class FormController extends AbstractController
     }
 
     /**
+     * @param Request $request
      * @return Response
+     * @throws Exception
      * @Route("/success", name="app_success")
      */
-    public function success(): Response
+    public function success(Request $request): Response
     {
-        $formData = $this->get('session')->getFlashBag()->get('formData')[0];
-        $inputDate = $formData['date'];
-        $inputTimezone = $formData['timezone'];
-
-        $date = new DateTime($inputDate);
+        $date = new DateTime($request->get('inputDate'));
 
         return $this->render('form/success.html.twig', [
-            'inputTimezone' => $inputTimezone,
-            'offsetMinutes' => $this->timeCountService->offsetInMinutes($inputTimezone),
-            'februaryLength' => $this->timeCountService->februaryLength($inputDate),
+            'inputTimezone' => $request->get('inputTimezone'),
+            'offsetMinutes' => $this->timeCountService->offsetInMinutes($request->get('inputTimezone')),
+            'februaryLength' => $this->timeCountService->februaryLength($request->get('inputDate')),
             'monthName' => $date->format('F'),
             'monthLength' => (int)$date->format('t'),
         ]);

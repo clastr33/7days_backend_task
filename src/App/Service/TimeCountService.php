@@ -4,12 +4,14 @@ namespace App\Service;
 
 use DateTime;
 use DateTimeZone;
+use Exception;
 
 class TimeCountService
 {
     /**
      * @param string $inputTimezone
      * @return string|null
+     * @throws Exception
      */
     public function offsetInMinutes(string $inputTimezone): ?string
     {
@@ -22,7 +24,7 @@ class TimeCountService
 
     /**
      * @param string $inputDate
-     * @return string|null
+     * @return int|null
      */
     public function februaryLength(string $inputDate): ?int
     {
