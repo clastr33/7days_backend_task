@@ -54,8 +54,8 @@ class FormController extends AbstractController
 
         return $this->render('form/success.html.twig', [
             'inputTimezone' => $inputTimezone,
-            'offsetMinutes' => $this->timeCountService->OffsetInMinutes($inputTimezone),
-            'februaryLength' => $this->timeCountService->FebruaryLength($inputDate),
+            'offsetMinutes' => $this->timeCountService->offsetInMinutes($inputTimezone),
+            'februaryLength' => $this->timeCountService->februaryLength($inputDate),
             'monthName' => $date->format('F'),
             'monthLength' => (int)$date->format('t'),
         ]);

@@ -11,7 +11,7 @@ class TimeCountService
      * @param string $inputTimezone
      * @return string|null
      */
-    public function OffsetInMinutes(string $inputTimezone): ?string
+    public function offsetInMinutes(string $inputTimezone): ?string
     {
         $timezone = new DateTimeZone($inputTimezone);
         $offsetSeconds = $timezone->getOffset(new DateTime());
@@ -24,7 +24,7 @@ class TimeCountService
      * @param string $inputDate
      * @return string|null
      */
-    public function FebruaryLength(string $inputDate): ?int
+    public function februaryLength(string $inputDate): ?int
     {
         $currentYear = (int) date($inputDate);
         $february = new DateTime("$currentYear-02-01");
