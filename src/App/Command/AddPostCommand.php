@@ -36,7 +36,7 @@ class AddPostCommand extends Command
     {
         $currentDate = new DateTime();
         $title = "Summary " . $currentDate->format('Y-m-d');
-        $content = $this->loremIpsum->paragraphs(1);
+        $content = $this->loremIpsum->paragraphs();
 
         $this->postManager->addPost($title, $content);
 

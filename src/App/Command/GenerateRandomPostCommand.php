@@ -6,11 +6,8 @@ use App\Entity\Post;
 use Doctrine\ORM\EntityManagerInterface;
 use joshtronic\LoremIpsum;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 class GenerateRandomPostCommand extends Command
 {
@@ -33,7 +30,7 @@ class GenerateRandomPostCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $title = $this->loremIpsum->words(mt_rand(4, 6));
+        $title = $this->loremIpsum->words(random_int(4, 6));
         $content = $this->loremIpsum->paragraphs(2);
 
         $post = new Post();

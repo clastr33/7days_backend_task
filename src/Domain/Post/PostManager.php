@@ -34,8 +34,6 @@ class PostManager
      */
     public function findPost(int $id): Post
     {
-        $postRepository = $this->em->getRepository(Post::class);
-
-        return $postRepository->findOneBy(['id' => $id]);
+        return $this->em->getRepository(Post::class)->findOneBy(['id' => $id]);
     }
 }
