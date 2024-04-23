@@ -11,6 +11,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class PostController extends AbstractController
 {
     /**
+     * @param PostRepository $postRepository
+     * @return Response
      * @Route("/", name="app_post_index")
      */
     public function index(PostRepository $postRepository): Response
@@ -23,9 +25,12 @@ class PostController extends AbstractController
     }
 
     /**
+     * @param PostManager $postManager
+     * @param int $id
+     * @return Response
      * @Route("/post/{id}", name="app_post_show")
      */
-    public function show(PostManager $postManager, $id): Response
+    public function show(PostManager $postManager, int $id): Response
     {
         return $this->render('post/show.html.twig', [
             'post' => $postManager->findPost($id),

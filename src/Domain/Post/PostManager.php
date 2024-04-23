@@ -14,7 +14,12 @@ class PostManager
         $this->em = $em;
     }
 
-    public function addPost($title, $content)
+    /**
+     * @param string $title
+     * @param string $content
+     * @return void
+     */
+    public function addPost(string $title, string $content): void
     {
         $post = new Post();
         $post->setTitle($title);
@@ -23,7 +28,11 @@ class PostManager
         $this->em->flush();
     }
 
-    public function findPost($id): Post
+    /**
+     * @param int $id
+     * @return Post
+     */
+    public function findPost(int $id): Post
     {
         $postRepository = $this->em->getRepository(Post::class);
 

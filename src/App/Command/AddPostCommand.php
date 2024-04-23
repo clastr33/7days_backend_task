@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use DateTime;
 use Domain\Post\PostManager;
 use joshtronic\LoremIpsum;
 use Symfony\Component\Console\Command\Command;
@@ -33,7 +34,7 @@ class AddPostCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $currentDate = new \DateTime();
+        $currentDate = new DateTime();
         $title = "Summary " . $currentDate->format('Y-m-d');
         $content = $this->loremIpsum->paragraphs(1);
 
